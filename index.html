@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+	<script src="./angular.min.js"> </script>
+	<link rel="stylesheet" href="index.css">
+	<script src="script.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="MyController">
+
+	<header>
+		<div class="head-elem">
+			<div class="head-l">
+				<img src="" alt="onepush">
+				<span class="h1">OnePush</span>
+				<h5></h5>
+				<p>find the best websites online</p>
+			</div>
+		</div>
+		<div class="head-elem">
+			<div class="results-prev">
+				We've found <b>{{totalList.length}}</b> personal web portfolio
+			</div>
+		</div>
+	</header>
+        
+	<section>
+		<article>
+			<form name="form">
+		      <input type="text" name="search" ng-model="searchInput" placeholder="Search (by title , url or tag)">
+		      <input type="submit" ng-click="applyFilter(form.search.value)">
+		    </form>
+
+           <div class="main-article">
+           	<div ng-repeat="sites in list_websites | filter:searchInput track by sites.id" class="site-elem" ng-click="goto(sites.url_address)">
+           	  <div class="elem-img">
+           	    <img src="{{sites.favicon_image}}" alt="{{sites.favicon_image}}">  	
+           	  </div>
+           	  <div class="elem-title">
+           	  	<b>{{sites.title}}</b><br>
+           	  	<span>
+           	  		<img class="icon" src="./label.png" alt="tag">
+           	  		 <span class="elem-label">{{sites.tag}} </span>
+                  
+                    <span class="separator">|</span>
+
+           	  		<img class="icon" src="./link.png" alt="link"> 
+           	  		 <span class="elem-url" title="{{sites.url_address}}">{{sites.url_address}}</span>
+           	  	</span>
+           	  </div>
+           	</div>
+           </div>
+
+           <div class="pagination" ng-init="selectedItem=''">
+           	<span ng-repeat="page in paginationArray"  ng-click="paginate($index+1);">
+           		<button>{{$index+1}}</button>
+           	</span> 
+           </div>
+
+		</article>
+		<aside>
+            <form name='addForm'>
+            <h1>Contribute/Add website</h1>
+            	<input type="text" placeholder="Title" ng-model="addForm_title" name="title"><br>
+            	<input type="text" placeholder="URL"  ng-model="addForm_url" name="url"><br>	
+
+            	<input type="text" placeholder="Tag" ng-model="addForm_tag"  name="tag">
+            	<input type="submit" value="&#10010;push website" ng-click="addToData(addForm_title , addForm_url, addForm_tag )">
+            </form>
+		</aside>
+	</section>
+
+</body>
+</html>
